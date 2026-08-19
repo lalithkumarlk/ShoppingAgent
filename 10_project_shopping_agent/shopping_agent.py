@@ -32,7 +32,7 @@ def search_products(
     Args:
         query : The search query to match against product names and descriptions.
         max_price : The maximum price of the products to return. If None, no price filtering is applied.
-        is_organic: if Organic then True else by dafault False
+        is_organic: if Organic then "true" else "false", or null for no filter
 
     """
     try:
@@ -44,6 +44,10 @@ def search_products(
                 is_organic = False
             else:
                 is_organic = None
+        elif is_organic is None:
+            is_organic = None
+        else:
+            is_organic = None
 
         # Connect to the SQLite database
         conn = sqlite3.connect(DB_PATH)
@@ -130,7 +134,7 @@ def desc_product_image(image_path: str) -> str:
                     "Return ONLY a JSON object with these fields:\n"
                     "- product_type: what kind of product it is (e.g. honey, olive oil, almonds)\n"
                     "- search_query: a short keyword to search for it (e.g. 'honey', 'olive oil')\n"
-                    "- is_organic: true if the label says organic, false if not, null if unclear\n"
+                    '- is_organic: "true" if the label says organic, "false" if not, null if unclear\n'
                     "- description: one sentence describing the product"
                 ),
             },
